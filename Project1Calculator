@@ -1,0 +1,116 @@
+HTML:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Simple Calculator</title>
+</head>
+<body>
+  <div class="calculator">
+    <input type="text" id="display" readonly>
+    <div class="buttons">
+      <button class="number" data-value="7">7</button>
+      <button class="number" data-value="8">8</button>
+      <button class="number" data-value="9">9</button>
+      <button class="operator" data-value="+">+</button>
+      <button class="number" data-value="4">4</button>
+      <button class="number" data-value="5">5</button>
+      <button class="number" data-value="6">6</button>
+      <button class="operator" data-value="-">-</button>
+      <button class="number" data-value="1">1</button>
+      <button class="number" data-value="2">2</button>
+      <button class="number" data-value="3">3</button>
+      <button class="operator" data-value="*">*</button>
+      <button class="number" data-value="0">0</button>
+      <button class="operator" data-value=".">.</button>
+      <button id="calculate" class="equals">=</button>
+      <button class="operator" data-value="/">/</button>
+      <button id="clear" class="clear">C</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+
+  CSS:
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: grey;
+  }
+  
+  .calculator {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    width: 300px;
+    padding: 10px;
+  }
+  
+  #display {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 5px;
+    font-size: 16px;
+  }
+  
+  .buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 5px;
+    background-color: black;
+  }
+  
+  button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: white; 
+ }
+  
+  .equals {
+    grid-column: span 2;
+  }
+  
+  .operator {
+    background-color: #f0f0f0;
+  }
+
+
+JS:
+document.addEventListener('DOMContentLoaded', function () {
+    let display = document.getElementById('display');
+    let buttons = document.querySelectorAll('.number, .operator');
+    let clearButton = document.getElementById('clear');
+    let calculateButton = document.getElementById('calculate');
+  
+    let currentInput = '';
+  
+    buttons.forEach(button => {
+      button.addEventListener('click', function () {
+        const value = this.getAttribute('data-value');
+        currentInput += value;
+        display.value = currentInput;
+      });
+    });
+  
+    calculateButton.addEventListener('click', function () {
+      try {
+        currentInput = eval(currentInput).toString();
+        display.value = currentInput;
+      } catch (error) {
+        display.value = 'Error';
+      }
+    });
+  
+    clearButton.addEventListener('click', function () {
+      currentInput = '';
+      display.value = '';
+    });
+  });
